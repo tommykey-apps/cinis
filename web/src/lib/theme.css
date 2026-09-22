@@ -1,0 +1,279 @@
+/*
+ * 明暗テーマの役割変数。
+ * デジタル庁デザインシステムに暗色仕様はないため、暗色はトークンの原色系で組んだ独自の役割表。
+ * 値はすべてトークン名で書く (16 進の直書きはしない)。コントラスト比は scratchpad/contrast.py で実測済み。
+ *
+ * 明 (既定) は公式部品の色と同じ値なので、明では見た目が変わらない。
+ * 暗は 2 か所で同じ値を定義する: 端末設定 (prefers-color-scheme) と手動選択 (data-theme="dark")。
+ */
+
+:root {
+	color-scheme: light;
+	--cinis-bg: var(--color-neutral-white);
+	--cinis-text: var(--color-neutral-solid-gray-900);
+	--cinis-text-body: var(--color-neutral-solid-gray-800);
+	--cinis-text-sub: var(--color-neutral-solid-gray-600);
+	--cinis-border: var(--color-neutral-solid-gray-200);
+	--cinis-border-input: var(--color-neutral-solid-gray-600);
+	--cinis-border-hover: var(--color-neutral-black);
+	--cinis-surface-hover: var(--color-neutral-solid-gray-50);
+	--cinis-focus-outline: var(--color-neutral-black);
+	--cinis-primary: var(--color-key-900);
+	--cinis-primary-hover: var(--color-key-1000);
+	--cinis-primary-active: var(--color-key-1200);
+	--cinis-on-primary: var(--color-neutral-white);
+	--cinis-outline-hover-bg: var(--color-key-200);
+	--cinis-outline-active-bg: var(--color-key-300);
+	--cinis-text-button-hover-bg: var(--color-key-50);
+	--cinis-text-button-active-bg: var(--color-key-100);
+	--cinis-link: var(--color-primitive-blue-1000);
+	--cinis-link-hover: var(--color-primitive-blue-900);
+	--cinis-link-visited: var(--color-primitive-magenta-900);
+	--cinis-disabled-bg: var(--color-neutral-solid-gray-300);
+	--cinis-disabled-text: var(--color-neutral-solid-gray-50);
+	--cinis-disabled-outline-text: var(--color-neutral-solid-gray-300);
+	--cinis-error: var(--color-semantic-error-1);
+	--cinis-error-hover: var(--color-primitive-red-1000);
+	--cinis-success: var(--color-semantic-success-2);
+	--cinis-info2: var(--color-neutral-solid-gray-536);
+}
+
+/* 暗色の役割表 (端末設定に追随する場合) */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		color-scheme: dark;
+		--cinis-bg: var(--color-neutral-solid-gray-900);
+		--cinis-text: var(--color-neutral-white);
+		--cinis-text-body: var(--color-neutral-solid-gray-100);
+		--cinis-text-sub: var(--color-neutral-solid-gray-300);
+		--cinis-border: var(--color-neutral-solid-gray-600);
+		--cinis-border-input: var(--color-neutral-solid-gray-500);
+		--cinis-border-hover: var(--color-neutral-white);
+		--cinis-surface-hover: var(--color-neutral-solid-gray-800);
+		--cinis-focus-outline: var(--color-neutral-white);
+		--cinis-primary: var(--color-key-300);
+		--cinis-primary-hover: var(--color-key-200);
+		--cinis-primary-active: var(--color-key-100);
+		--cinis-on-primary: var(--color-neutral-solid-gray-900);
+		--cinis-outline-hover-bg: var(--color-key-1100);
+		--cinis-outline-active-bg: var(--color-key-1000);
+		--cinis-text-button-hover-bg: var(--color-key-1100);
+		--cinis-text-button-active-bg: var(--color-key-1000);
+		--cinis-link: var(--color-primitive-blue-300);
+		--cinis-link-hover: var(--color-primitive-blue-200);
+		--cinis-link-visited: var(--color-primitive-magenta-300);
+		--cinis-disabled-bg: var(--color-neutral-solid-gray-700);
+		--cinis-disabled-text: var(--color-neutral-solid-gray-400);
+		--cinis-disabled-outline-text: var(--color-neutral-solid-gray-600);
+		--cinis-error: var(--color-primitive-red-500);
+		--cinis-error-hover: var(--color-primitive-red-400);
+		--cinis-success: var(--color-primitive-green-400);
+		--cinis-info2: var(--color-neutral-solid-gray-400);
+	}
+}
+
+/* 暗色の役割表 (手動で選んだ場合)。上の @media ブロックと同じ値を保つ */
+:root[data-theme='dark'] {
+	color-scheme: dark;
+	--cinis-bg: var(--color-neutral-solid-gray-900);
+	--cinis-text: var(--color-neutral-white);
+	--cinis-text-body: var(--color-neutral-solid-gray-100);
+	--cinis-text-sub: var(--color-neutral-solid-gray-300);
+	--cinis-border: var(--color-neutral-solid-gray-600);
+	--cinis-border-input: var(--color-neutral-solid-gray-500);
+	--cinis-border-hover: var(--color-neutral-white);
+	--cinis-surface-hover: var(--color-neutral-solid-gray-800);
+	--cinis-focus-outline: var(--color-neutral-white);
+	--cinis-primary: var(--color-key-300);
+	--cinis-primary-hover: var(--color-key-200);
+	--cinis-primary-active: var(--color-key-100);
+	--cinis-on-primary: var(--color-neutral-solid-gray-900);
+	--cinis-outline-hover-bg: var(--color-key-1100);
+	--cinis-outline-active-bg: var(--color-key-1000);
+	--cinis-text-button-hover-bg: var(--color-key-1100);
+	--cinis-text-button-active-bg: var(--color-key-1000);
+	--cinis-link: var(--color-primitive-blue-300);
+	--cinis-link-hover: var(--color-primitive-blue-200);
+	--cinis-link-visited: var(--color-primitive-magenta-300);
+	--cinis-disabled-bg: var(--color-neutral-solid-gray-700);
+	--cinis-disabled-text: var(--color-neutral-solid-gray-400);
+	--cinis-disabled-outline-text: var(--color-neutral-solid-gray-600);
+	--cinis-error: var(--color-primitive-red-500);
+	--cinis-error-hover: var(--color-primitive-red-400);
+	--cinis-success: var(--color-primitive-green-400);
+	--cinis-info2: var(--color-neutral-solid-gray-400);
+}
+
+/*
+ * 公式部品の色を役割変数に付け替える。
+ * 複製した部品 CSS (lib/dads/) は変更せず、ここで上書きする。
+ * 公式側は `.dads-button[data-type="solid-fill"]:focus-visible` (0,2,1) のような詳細度なので、
+ * `:root` を前置して同じ詳細度にし、読み込み順で勝たせる。
+ */
+
+/* フォーカス表示 (global.css / 各部品) */
+:root :focus-visible,
+:root .dads-button:focus-visible,
+:root .dads-textarea__textarea:focus-visible,
+:root .dads-select__select:focus-visible,
+:root .dads-input-text__input:focus-visible,
+:root .dads-link:focus-visible,
+:root .dads-notification-banner__close:focus-visible {
+	outline-color: var(--cinis-focus-outline);
+}
+
+/* リンク */
+:root .dads-link:any-link {
+	color: var(--cinis-link);
+}
+
+:root .dads-link:visited {
+	color: var(--cinis-link-visited);
+}
+
+@media (hover: hover) {
+	:root .dads-link:hover {
+		color: var(--cinis-link-hover);
+	}
+}
+
+/* ボタン */
+:root .dads-button {
+	--button-color: var(--cinis-primary);
+	--button-hover-color: var(--cinis-primary-hover);
+	--button-active-color: var(--cinis-primary-active);
+	--button-outline-hover-bg-color: var(--cinis-outline-hover-bg);
+	--button-outline-active-bg-color: var(--cinis-outline-active-bg);
+}
+
+:root .dads-button[data-type='solid-fill'] {
+	color: var(--cinis-on-primary);
+}
+
+:root .dads-button[data-type='solid-fill']:disabled,
+:root .dads-button[data-type='solid-fill'][aria-disabled='true'] {
+	background-color: var(--cinis-disabled-bg);
+	color: var(--cinis-disabled-text);
+}
+
+:root .dads-button[data-type='outline'] {
+	background-color: var(--cinis-bg);
+}
+
+:root .dads-button[data-type='outline']:disabled,
+:root .dads-button[data-type='outline'][aria-disabled='true'] {
+	background-color: var(--cinis-bg);
+	color: var(--cinis-disabled-outline-text);
+}
+
+@media (hover: hover) {
+	:root .dads-button[data-type='text']:hover {
+		background-color: var(--cinis-text-button-hover-bg);
+	}
+}
+
+:root .dads-button[data-type='text']:active {
+	background-color: var(--cinis-text-button-active-bg);
+}
+
+:root .dads-button[data-type='text']:disabled,
+:root .dads-button[data-type='text'][aria-disabled='true'] {
+	color: var(--cinis-disabled-outline-text);
+}
+
+/* 入力項目のラベル */
+:root .dads-form-control-label {
+	color: var(--cinis-text-body);
+}
+
+:root .dads-form-control-label__support-text {
+	color: var(--cinis-text-sub);
+}
+
+:root .dads-form-control-label__requirement[data-required='true'] {
+	color: var(--cinis-error);
+}
+
+/* テキストエリア・入力欄・セレクト */
+:root .dads-textarea,
+:root .dads-input-text,
+:root .dads-select {
+	color: var(--cinis-text-body);
+}
+
+:root .dads-textarea__textarea,
+:root .dads-input-text__input,
+:root .dads-select__select {
+	border-color: var(--cinis-border-input);
+	background-color: var(--cinis-bg);
+	color: var(--cinis-text);
+}
+
+@media (hover: hover) {
+	:root .dads-textarea__textarea:not(:read-only):hover,
+	:root .dads-input-text__input:not(:read-only):hover,
+	:root .dads-select__select:hover {
+		border-color: var(--cinis-border-hover);
+	}
+}
+
+:root .dads-textarea__textarea:is(:user-invalid, [aria-invalid='true']),
+:root .dads-input-text__input:is(:user-invalid, [aria-invalid='true']),
+:root .dads-select__select:is(:user-invalid, [aria-invalid='true']) {
+	border-color: var(--cinis-error);
+}
+
+@media (hover: hover) {
+	:root .dads-textarea__textarea:is(:user-invalid, [aria-invalid='true']):hover,
+	:root .dads-input-text__input:is(:user-invalid, [aria-invalid='true']):hover,
+	:root .dads-select__select:is(:user-invalid, [aria-invalid='true']):hover {
+		border-color: var(--cinis-error-hover);
+	}
+}
+
+:root .dads-textarea__counter {
+	color: var(--cinis-text-sub);
+}
+
+:root .dads-textarea__counter[data-exceeded],
+:root .dads-textarea__error-text,
+:root .dads-input-text__error-text,
+:root .dads-select__error-text {
+	color: var(--cinis-error);
+}
+
+/* 通知バナー */
+:root .dads-notification-banner {
+	background-color: var(--cinis-bg);
+	color: var(--cinis-text-body);
+}
+
+:root .dads-notification-banner[data-type='success'] {
+	--_base-color: var(--cinis-success);
+	--_color-chip-color: var(--cinis-success);
+}
+
+:root .dads-notification-banner[data-type='error'] {
+	--_base-color: var(--cinis-error);
+	--_color-chip-color: var(--cinis-error);
+}
+
+:root .dads-notification-banner[data-type='info-2'] {
+	--_base-color: var(--cinis-info2);
+	--_color-chip-color: var(--cinis-info2);
+}
+
+:root .dads-notification-banner__heading-text,
+:root .dads-notification-banner__close {
+	color: var(--cinis-text);
+}
+
+:root .dads-notification-banner__body {
+	color: var(--cinis-text-body);
+}
+
+@media (hover: hover) {
+	:root .dads-notification-banner__close:hover {
+		background-color: var(--cinis-surface-hover);
+	}
+}

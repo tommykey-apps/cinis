@@ -24,6 +24,6 @@
 
 <style>
 	.locale-label {
-		color: var(--color-neutral-solid-gray-600);
+		color: var(--cinis-text-sub);
 	}
 </style>

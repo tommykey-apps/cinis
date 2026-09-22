@@ -14,6 +14,7 @@
 @import './lib/dads/textarea.css';
 @import './lib/dads/select.css';
 @import './lib/dads/notification-banner.css';
+@import './lib/theme.css';
 
 @theme {
 	/* Tailwind の色・文字サイズ・書体・角丸・影の既定値を捨て、トークン以外を使えなくする */
@@ -29,8 +30,8 @@
 
 @layer base {
 	body {
-		background-color: var(--color-neutral-white);
-		color: var(--color-neutral-solid-gray-900);
+		background-color: var(--cinis-bg);
+		color: var(--cinis-text);
 		font-family: var(--font-family-sans);
 		font-size: var(--font-size-16);
 		line-height: var(--line-height-170);

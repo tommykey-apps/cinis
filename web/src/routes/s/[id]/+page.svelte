@@ -129,18 +129,18 @@
 	.secret-text {
 		white-space: pre-wrap;
 		overflow-wrap: anywhere;
-		border: 1px solid var(--color-neutral-solid-gray-600);
+		border: 1px solid var(--cinis-border-input);
 		border-radius: var(--border-radius-8);
-		background-color: var(--color-neutral-white);
+		background-color: var(--cinis-bg);
 		padding: 1rem;
 		font-family: var(--font-family-mono);
 		font-size: var(--font-size-16);
 		line-height: var(--line-height-170);
-		color: var(--color-neutral-solid-gray-900);
+		color: var(--cinis-text);
 	}
 
 	.detail {
-		color: var(--color-neutral-solid-gray-600);
+		color: var(--cinis-text-sub);
 		font-family: var(--font-family-mono);
 	}
 </style>

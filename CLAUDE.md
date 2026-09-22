@@ -87,6 +87,7 @@ cd infra && terraform destroy           # 使わないときは destroy
 - **AWS SDK は DynamoDB のみ** — デプロイサイズ 250MB 制限回避
 - **CloudFront は PriceClass_200** — 日本は PriceClass_100 に含まれない
 - **API Gateway は HTTP API** — REST API より約 70% 安
+- **暗色テーマは独自設計** — デジタル庁デザインシステムに暗色仕様がないため、`web/src/lib/theme.css` でトークンの原色系から役割変数を組む。切替は system / light / dark (`localStorage['cinis-theme']`)
 
 ## AWS リージョン / ドメイン
 

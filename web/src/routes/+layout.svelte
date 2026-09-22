@@ -2,12 +2,15 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import LocaleSwitcher from '$lib/components/LocaleSwitcher.svelte';
+	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import { initLocale, t } from '$lib/i18n/index.svelte';
+	import { initTheme } from '$lib/theme.svelte';
 
 	let { children } = $props();
 
 	onMount(() => {
 		initLocale();
+		initTheme();
 	});
 </script>
 
@@ -20,7 +23,10 @@
 	<header class="site-header">
 		<div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4">
 			<a href="/" class="site-title dads-u-std-20B-150">cinis</a>
-			<LocaleSwitcher />
+			<div class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2">
+				<ThemeSwitcher />
+				<LocaleSwitcher />
+			</div>
 		</div>
 	</header>
 	<main class="mx-auto max-w-3xl px-4 py-8">
@@ -33,13 +39,13 @@
 
 <style>
 	.site-header {
-		border-bottom: 1px solid var(--color-neutral-solid-gray-200);
+		border-bottom: 1px solid var(--cinis-border);
 		padding-top: 0.75rem;
 		padding-bottom: 0.75rem;
 	}
 
 	.site-title {
-		color: var(--color-neutral-solid-gray-900);
+		color: var(--cinis-text);
 		text-decoration: none;
 	}
 
@@ -48,7 +54,7 @@
 	}
 
 	.site-footer {
-		border-top: 1px solid var(--color-neutral-solid-gray-200);
-		color: var(--color-neutral-solid-gray-600);
+		border-top: 1px solid var(--cinis-border);
+		color: var(--cinis-text-sub);
 	}
 </style>
