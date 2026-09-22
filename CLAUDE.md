@@ -1,4 +1,4 @@
-# burnnote
+# cinis
 
 AWS ポートフォリオプロジェクト 5 本目 — **One-time Secret** (1 回読んだら消える秘密共有)。
 Laravel 13 + Bref (PHP on Lambda, arm64) + SvelteKit + DynamoDB。ゼロ知識暗号化 (AES-256-GCM + URL fragment)。
@@ -6,9 +6,9 @@ Laravel 13 + Bref (PHP on Lambda, arm64) + SvelteKit + DynamoDB。ゼロ知識�
 ## プロジェクト構成
 
 ```
-burnnote/
+cinis/
 ├── api/          # Laravel 13 (PHP 8.4) + Bref
-├── web/          # SvelteKit 2 (Svelte 5 + Tailwind v4 + shadcn-svelte)
+├── web/          # SvelteKit 2 (Svelte 5 + Tailwind v4 + デジタル庁デザインシステム)
 ├── infra/        # Terraform (Lambda arm64, DynamoDB TTL, API Gateway HTTP API, CloudFront, Route53)
 ├── docs/         # アーキテクチャ図 (draw.io)
 └── .github/      # CI/CD (GitHub Actions + flox)
@@ -71,7 +71,7 @@ cd infra && terraform destroy           # 使わないときは destroy
 1. ブラウザで WebCrypto API → AES-256-GCM 鍵を生成
 2. 平文を暗号化 → `{ciphertext, iv}` を POST
 3. サーバーは暗号文のみ保存 (鍵は知らない)
-4. 発行 URL: `https://burnnote.tommykeyapp.com/s/{id}#{key_b64}` — fragment はサーバー送信されない
+4. 発行 URL: `https://cinis.tommykeyapp.com/s/{id}#{key_b64}` — fragment はサーバー送信されない
 5. 受信者アクセス → サーバー暗号文を返却&即削除 → ブラウザが fragment の鍵で復号
 
 ## DB スキーマドキュメント
@@ -91,7 +91,7 @@ cd infra && terraform destroy           # 使わないときは destroy
 ## AWS リージョン / ドメイン
 
 - リージョン: ap-northeast-1 (東京)
-- ドメイン: burnnote.tommykeyapp.com
+- ドメイン: cinis.tommykeyapp.com
 - ACM 証明書: `*.tommykeyapp.com` (us-east-1) を data source で参照
 - Route53 hosted zone: `tommykeyapp.com` (既存)
 - Terraform state: `s3://tommykeyapp-tfstate/burnnote/terraform.tfstate`

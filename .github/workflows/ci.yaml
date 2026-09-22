@@ -111,7 +111,7 @@ jobs:
       - name: Create .env for artisan serve
         run: |
           cat > .env <<EOF
-          APP_NAME=burnnote
+          APP_NAME=cinis
           APP_ENV=testing
           APP_KEY=base64:$(openssl rand -base64 32)
           APP_DEBUG=true

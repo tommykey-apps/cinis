@@ -10,7 +10,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 24
         height = 2
         properties = {
-          markdown = "# burnnote operations dashboard\n**Domain:** ${var.domain} | **Region:** ${var.region} | **State:** s3://tommykeyapp-tfstate/burnnote/terraform.tfstate"
+          markdown = "# cinis operations dashboard\n**Domain:** ${var.domain} | **Region:** ${var.region} | **State:** s3://tommykeyapp-tfstate/burnnote/terraform.tfstate"
         }
       },
       {

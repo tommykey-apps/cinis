@@ -5,7 +5,7 @@ export type Locale = 'en' | 'ja';
 
 const messages = { en, ja } as const;
 
-const STORAGE_KEY = 'burnnote-locale';
+const STORAGE_KEY = 'cinis-locale';
 
 type MessageNode = string | { [k: string]: MessageNode };
 

@@ -1,20 +1,19 @@
 {
 	"meta": {
-		"title": "burnnote — 一度だけ読めるシークレット共有",
+		"title": "cinis",
 		"description": "1 回読まれたら消えるシークレットを共有できます。"
 	},
-	"nav": {
-		"tagline": "一度だけ読めるシークレット"
-	},
 	"footer": {
-		"note": "暗号化はブラウザ内で完結。サーバーは鍵を知りません。"
+		"note": "暗号化はブラウザ内で完結します。サーバーは鍵を受け取りません。"
 	},
 	"create": {
 		"heading": "一度だけ読めるシークレットを共有",
-		"description": "シークレットはブラウザ内で暗号化され、サーバーは暗号文のみを保持します。共有 URL は 1 回開かれた時点で消えます。",
 		"label_secret": "シークレット",
-		"placeholder": "共有したい内容を入力または貼り付け…",
+		"required": "※必須",
+		"secret_support": "ブラウザ内で暗号化され、サーバーには暗号文だけが保存されます。共有 URL は 1 回開かれた時点で消えます。",
+		"counter": "{count} / {max} 文字",
 		"label_expires": "有効期限",
+		"expires_support": "期限内に開かれなかった場合はサーバーから自動で削除されます。",
 		"expiry": {
 			"5m": "5 分",
 			"1h": "1 時間",
@@ -22,24 +21,29 @@
 			"7d": "7 日"
 		},
 		"submit": "一度だけ開ける URL を作成",
-		"submitting": "暗号化中…",
-		"result_note": "この URL を共有してください。1 回だけ開けます。",
+		"submitting": "暗号化中",
+		"result_title": "一度だけ開ける URL を作成しました",
+		"result_note": "この URL を相手に渡してください。1 回だけ開けます。",
+		"result_label": "共有 URL",
 		"copy": "コピー",
-		"copied": "コピーしました！",
-		"reset": "もう 1 つ作成"
+		"copied": "コピーしました",
+		"reset": "もう 1 つ作成",
+		"close": "閉じる"
 	},
 	"reveal": {
-		"checking": "確認中…",
+		"checking": "シークレットを確認しています。",
 		"no_key_title": "URL に鍵がありません",
-		"no_key_body": "この URL には復号用の鍵 (# 以降の部分) が含まれていません。鍵がないとシークレットは復号できません。",
+		"no_key_body": "この URL には復号用の鍵 (# 以降の部分) が含まれていません。送り主から受け取った URL を末尾まで貼り付けてください。",
 		"gone_title": "このシークレットはもう存在しません",
-		"gone_body": "すでに開かれたか、有効期限が切れています。",
+		"gone_body": "すでに開かれたか、有効期限が切れています。必要なら送り主に再発行を依頼してください。",
 		"ready_title": "シークレットが届いています",
 		"ready_body": "開いた瞬間にサーバーから完全に削除されます。この URL は 2 度目は開けません。",
 		"reveal_button": "開く (1 回だけ)",
-		"revealing": "復号中…",
-		"destroyed_note": "シークレットはサーバーから削除されました。",
-		"error_title": "復号に失敗しました"
+		"revealing": "復号しています。",
+		"destroyed_title": "シークレットを表示しました",
+		"destroyed_note": "サーバーからは削除済みです。必要なら今のうちに控えてください。",
+		"error_title": "復号に失敗しました",
+		"error_body": "鍵が URL と一致していないか、通信に失敗しました。"
 	},
 	"errors": {
 		"create_failed": "作成に失敗しました: {status}",

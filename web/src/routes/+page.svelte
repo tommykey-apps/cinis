@@ -3,6 +3,8 @@
 	import { createNote } from '$lib/api';
 	import { t } from '$lib/i18n/index.svelte';
 
+	const MAX_LENGTH = 8000;
+
 	let plaintext = $state('');
 	let expiresIn = $state(3600);
 	let url = $state<string | null>(null);
@@ -17,9 +19,11 @@
 		{ key: '7d', value: 604800 }
 	] as const;
 
+	const exceeded = $derived(plaintext.length > MAX_LENGTH);
+
 	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
-		if (!plaintext.trim()) return;
+		if (!plaintext.trim() || exceeded) return;
 		submitting = true;
 		error = null;
 		copied = false;
@@ -45,80 +49,108 @@
 		plaintext = '';
 		url = null;
 		error = null;
+		copied = false;
 	}
 </script>
 
-<div class="space-y-6">
-	<div>
-		<h1 class="text-3xl font-bold tracking-tight">{t('create.heading')}</h1>
-		<p class="mt-2 text-muted-foreground">{t('create.description')}</p>
-	</div>
+<h1 class="dads-u-std-28B-150 mb-6">{t('create.heading')}</h1>
 
-	{#if url}
-		<div
-			class="rounded-lg border border-[color:var(--color-border)] bg-card p-6 shadow-sm space-y-4"
-		>
-			<p class="text-sm text-muted-foreground">{t('create.result_note')}</p>
-			<div class="flex gap-2">
-				<input
-					class="flex-1 rounded-md border border-[color:var(--color-border)] bg-background px-3 py-2 font-mono text-sm"
-					readonly
-					value={url}
-					onclick={(e) => (e.currentTarget as HTMLInputElement).select()}
-				/>
-				<button
-					type="button"
-					onclick={copyUrl}
-					class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
-				>
-					{copied ? t('create.copied') : t('create.copy')}
-				</button>
+{#if url}
+	<div class="dads-notification-banner" data-style="standard" data-type="success" role="status">
+		<h2 class="dads-notification-banner__heading">
+			<svg class="dads-notification-banner__icon" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="OK">
+				<circle cx="12" cy="12" r="10" fill="currentcolor" />
+				<path d="m17.6 9.6-7 7-4.3-4.3L7.7 11l2.9 2.9 5.7-5.6 1.3 1.4Z" fill="Canvas" />
+			</svg>
+			<span class="dads-notification-banner__heading-text">{t('create.result_title')}</span>
+		</h2>
+		<div class="dads-notification-banner__body">
+			<p>{t('create.result_note')}</p>
+			<div class="dads-form-control-label" data-size="sm">
+				<label class="dads-form-control-label__label" for="share-url">{t('create.result_label')}</label>
+				<span class="dads-input-text">
+					<input
+						id="share-url"
+						class="dads-input-text__input share-url"
+						type="text"
+						data-size="md"
+						readonly
+						value={url}
+						onclick={(e) => (e.currentTarget as HTMLInputElement).select()}
+					/>
+				</span>
 			</div>
-			<button
-				type="button"
-				onclick={reset}
-				class="text-sm text-muted-foreground hover:text-foreground underline"
-			>
+		</div>
+		<div class="dads-notification-banner__actions">
+			<button class="dads-button" type="button" data-type="text" data-size="md" onclick={reset}>
 				{t('create.reset')}
 			</button>
+			<button class="dads-button" type="button" data-type="outline" data-size="md" onclick={copyUrl}>
+				{copied ? t('create.copied') : t('create.copy')}
+			</button>
 		</div>
-	{:else}
-		<form onsubmit={handleSubmit} class="space-y-4">
-			<label class="block">
-				<span class="text-sm font-medium">{t('create.label_secret')}</span>
+	</div>
+{:else}
+	<form onsubmit={handleSubmit} novalidate class="flex flex-col gap-8">
+		<div class="dads-form-control-label" data-size="md">
+			<label class="dads-form-control-label__label" for="secret">
+				{t('create.label_secret')}
+				<span class="dads-form-control-label__requirement" data-required="true">{t('create.required')}</span>
+			</label>
+			<p id="secret-support" class="dads-form-control-label__support-text">{t('create.secret_support')}</p>
+			<span class="dads-textarea">
 				<textarea
-					bind:value={plaintext}
+					id="secret"
+					class="dads-textarea__textarea w-full"
 					rows="8"
-					required
-					maxlength="8000"
-					placeholder={t('create.placeholder')}
-					class="mt-1 block w-full rounded-md border border-[color:var(--color-border)] bg-background px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+					bind:value={plaintext}
+					aria-required="true"
+					aria-invalid={error || exceeded ? 'true' : undefined}
+					aria-describedby={error ? 'secret-error secret-counter secret-support' : 'secret-counter secret-support'}
 				></textarea>
-			</label>
+				<span id="secret-counter" class="dads-textarea__counter" data-exceeded={exceeded ? '' : undefined}>
+					{t('create.counter', { count: plaintext.length.toLocaleString(), max: MAX_LENGTH.toLocaleString() })}
+				</span>
+				{#if error}
+					<span id="secret-error" class="dads-textarea__error-text" role="alert">{error}</span>
+				{/if}
+			</span>
+		</div>
 
-			<label class="block">
-				<span class="text-sm font-medium">{t('create.label_expires')}</span>
-				<select
-					bind:value={expiresIn}
-					class="mt-1 block w-full rounded-md border border-[color:var(--color-border)] bg-background px-3 py-2 text-sm"
-				>
-					{#each expiryOptions as opt}
-						<option value={opt.value}>{t(`create.expiry.${opt.key}`)}</option>
-					{/each}
-				</select>
-			</label>
+		<div class="dads-form-control-label" data-size="md">
+			<label class="dads-form-control-label__label" for="expires">{t('create.label_expires')}</label>
+			<p id="expires-support" class="dads-form-control-label__support-text">{t('create.expires_support')}</p>
+			<span class="dads-select">
+				<span class="dads-select__control">
+					<select id="expires" class="dads-select__select" data-size="md" bind:value={expiresIn} aria-describedby="expires-support">
+						{#each expiryOptions as opt (opt.key)}
+							<option value={opt.value}>{t(`create.expiry.${opt.key}`)}</option>
+						{/each}
+					</select>
+					<svg class="dads-select__chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M12 17L3 8L4 7L12 15L20 7L21 8L12 17Z" fill="currentcolor" />
+					</svg>
+				</span>
+			</span>
+		</div>
 
-			{#if error}
-				<p class="text-sm text-destructive">{error}</p>
-			{/if}
-
+		<div>
 			<button
+				class="dads-button"
 				type="submit"
-				disabled={submitting || !plaintext.trim()}
-				class="rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
+				data-type="solid-fill"
+				data-size="lg"
+				disabled={submitting || !plaintext.trim() || exceeded}
 			>
 				{submitting ? t('create.submitting') : t('create.submit')}
 			</button>
-		</form>
-	{/if}
-</div>
+		</div>
+	</form>
+{/if}
+
+<style>
+	.share-url {
+		width: 100%;
+		font-family: var(--font-family-mono);
+	}
+</style>
