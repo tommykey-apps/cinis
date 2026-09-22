@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: burnnote API
+  title: cinis API
   version: 1.0.0
   description: |
     1 回読んだら消える秘密共有サービスの公開 API。
@@ -13,10 +13,10 @@ info:
     **1-shot 削除**: `GET /api/notes/{id}` は暗号文を返しつつ DynamoDB の
     条件付き DeleteItem で同一リクエスト内に削除。2 回目は 410 Gone。
   contact:
-    name: burnnote
-    url: https://burnnote.tommykeyapp.com
+    name: cinis
+    url: https://cinis.tommykeyapp.com
 servers:
-  - url: https://burnnote.tommykeyapp.com
+  - url: https://cinis.tommykeyapp.com
     description: Production
 paths:
   /api/notes:

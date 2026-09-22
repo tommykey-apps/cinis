@@ -13,7 +13,7 @@ variable "project" {
 variable "domain" {
   description = "Public domain"
   type        = string
-  default     = "burnnote.tommykeyapp.com"
+  default     = "cinis.tommykeyapp.com"
 }
 
 variable "bref_layer_arn" {

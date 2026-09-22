@@ -8,7 +8,7 @@ async function waitForHydration(page: import('@playwright/test').Page) {
 test.describe('One-time secret flow', () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto('/');
-		await page.evaluate(() => localStorage.setItem('burnnote-locale', 'en'));
+		await page.evaluate(() => localStorage.setItem('cinis-locale', 'en'));
 		await page.reload();
 		await waitForHydration(page);
 	});
@@ -17,7 +17,7 @@ test.describe('One-time secret flow', () => {
 		const plaintext = `top secret ${crypto.randomUUID()}`;
 
 		await expect(page.getByRole('heading', { name: /Share a one-time secret/i })).toBeVisible();
-		await page.getByPlaceholder(/Type or paste a secret/i).fill(plaintext);
+		await page.getByLabel(/^Secret/i).fill(plaintext);
 		await page.getByLabel(/Expires in/i).selectOption('3600');
 		await page.getByRole('button', { name: /Create one-time URL/i }).click();
 
@@ -30,7 +30,7 @@ test.describe('One-time secret flow', () => {
 		const recipientCtx = await browser.newContext();
 		const recipientPage = await recipientCtx.newPage();
 		await recipientPage.goto(shareUrl);
-		await recipientPage.evaluate(() => localStorage.setItem('burnnote-locale', 'en'));
+		await recipientPage.evaluate(() => localStorage.setItem('cinis-locale', 'en'));
 		// Re-navigate to the share URL (reload would strip the hash through setLocale)
 		await recipientPage.goto(shareUrl);
 		await waitForHydration(recipientPage);
@@ -47,7 +47,7 @@ test.describe('One-time secret flow', () => {
 		const secondCtx = await browser.newContext();
 		const secondPage = await secondCtx.newPage();
 		await secondPage.goto(shareUrl);
-		await secondPage.evaluate(() => localStorage.setItem('burnnote-locale', 'en'));
+		await secondPage.evaluate(() => localStorage.setItem('cinis-locale', 'en'));
 		await secondPage.goto(shareUrl);
 		await waitForHydration(secondPage);
 		await expect(
@@ -69,7 +69,7 @@ test.describe('One-time secret flow', () => {
 
 		await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
-		await page.getByPlaceholder(/Type or paste a secret/i).fill('hello');
+		await page.getByLabel(/^Secret/i).fill('hello');
 		await page.getByRole('button', { name: /Create one-time URL/i }).click();
 		await expect(page.locator('input[readonly]')).toBeVisible({ timeout: 10_000 });
 

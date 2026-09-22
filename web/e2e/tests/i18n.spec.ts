@@ -8,7 +8,7 @@ async function waitForHydration(page: import('@playwright/test').Page) {
 test.describe('i18n (JA/EN)', () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto('/');
-		await page.evaluate(() => localStorage.setItem('burnnote-locale', 'en'));
+		await page.evaluate(() => localStorage.setItem('cinis-locale', 'en'));
 		await page.reload();
 		await waitForHydration(page);
 	});

@@ -1,9 +1,9 @@
-# burnnote
+# cinis
 
 1 回読んだら消える秘密共有サービス。ブラウザ側で AES-256-GCM 暗号化し、サーバーは暗号文しか知らないゼロ知識設計。
 
-🌐 **[https://burnnote.tommykeyapp.com](https://burnnote.tommykeyapp.com)**
-📖 **[API ドキュメント (Swagger UI)](https://tommykey-apps.github.io/burnnote/)**
+🌐 **[https://cinis.tommykeyapp.com](https://cinis.tommykeyapp.com)**
+📖 **[API ドキュメント (Swagger UI)](https://tommykey-apps.github.io/cinis/)**
 
 ## 構成図
 
@@ -16,7 +16,7 @@
 | | |
 |---|---|
 | バックエンド | PHP 8.4 + Laravel 13 + Bref v3 (Lambda, arm64) |
-| フロント | SvelteKit 2, Svelte 5, Tailwind CSS v4, mode-watcher |
+| フロント | SvelteKit 2, Svelte 5, Tailwind CSS v4, デジタル庁デザインシステム (design-tokens + 公式 HTML 部品の複製) |
 | i18n | 自作 (Svelte 5 `$state` + JSON 辞書、日本語 / 英語) |
 | DB | DynamoDB (On-Demand + TTL) |
 | 暗号化 | AES-256-GCM (WebCrypto API)、鍵は URL fragment |
@@ -36,7 +36,7 @@
 | **DynamoDB** | ノートの暗号文を保存、`expires_at` TTL で自動削除 (On-Demand) |
 | **CloudFront** | SPA + API の配信、SSL 終端 (PriceClass_200) |
 | **S3** | SvelteKit 静的ファイル配信 (OAC 経由で CloudFront のみアクセス可) |
-| **Route53** | `burnnote.tommykeyapp.com` の DNS (既存 hosted zone を data source で参照) |
+| **Route53** | `cinis.tommykeyapp.com` の DNS (既存 hosted zone を data source で参照) |
 | **ACM** | ワイルドカード証明書 `*.tommykeyapp.com` (us-east-1、既存) |
 | **SSM Parameter Store** | CI/CD から参照する CloudFront Distribution ID / S3 bucket 名 / Lambda 関数名 |
 | **CloudWatch Logs** | Lambda ログ (7 日保持) |
@@ -44,7 +44,7 @@
 
 ## API
 
-エンドポイント一覧・リクエスト/レスポンススキーマは **[Swagger UI](https://tommykey-apps.github.io/burnnote/)** を参照。
+エンドポイント一覧・リクエスト/レスポンススキーマは **[Swagger UI](https://tommykey-apps.github.io/cinis/)** を参照。
 
 レート制限: `throttle:10,1` (クライアント IP で毎分 10 リクエスト)。
 
@@ -54,7 +54,7 @@
 2. 平文を鍵で暗号化 → `{ciphertext, iv}` を `POST /api/notes` へ
 3. サーバーは暗号文のみを DynamoDB に保存 (**鍵は受け取らない**)
 4. レスポンスの `id` を受けて URL を組み立て:
-   `https://burnnote.tommykeyapp.com/s/{id}#{key_base64url}`
+   `https://cinis.tommykeyapp.com/s/{id}#{key_base64url}`
    - **`#` 以降 (fragment) はブラウザ内部のみで処理され、HTTP リクエスト・Referer・アクセスログに載らない**
 5. 共有相手がアクセス → `GET /api/notes/{id}` でサーバーが暗号文を返しつつ **条件付き DeleteItem で同一 request 内で削除**
 6. ブラウザが fragment の鍵で復号 → 平文表示
@@ -63,7 +63,7 @@
 ## ディレクトリ構成
 
 ```
-burnnote/
+cinis/
 ├── api/                       # Laravel 13 (PHP 8.4) + Bref v3
 │   ├── app/Http/Controllers/NoteController.php
 │   ├── app/Services/NoteRepository.php
@@ -71,13 +71,13 @@ burnnote/
 │   ├── routes/api.php
 │   └── tests/Feature/NoteTest.php
 ├── web/                       # SvelteKit 2 (Svelte 5)
-│   ├── src/routes/+layout.svelte          # ヘッダー + テーマトグル + 言語切替
+│   ├── src/routes/+layout.svelte          # ヘッダー + 言語切替
 │   ├── src/routes/+page.svelte            # 作成画面
 │   ├── src/routes/s/[id]/+page.svelte     # 復号画面
 │   ├── src/lib/crypto.ts                  # WebCrypto AES-256-GCM
 │   ├── src/lib/api.ts                     # fetch ラッパ
 │   ├── src/lib/i18n/{en,ja}.json + index.svelte.ts
-│   └── src/lib/components/{ThemeToggle,LocaleSwitcher}.svelte
+│   └── src/lib/components/LocaleSwitcher.svelte
 ├── infra/                     # Terraform
 │   ├── lambda.tf              # arm64 + Bref v3 layer + IAM
 │   ├── dynamodb.tf            # On-Demand + TTL

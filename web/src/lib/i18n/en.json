@@ -1,20 +1,19 @@
 {
 	"meta": {
-		"title": "burnnote — one-time secrets",
+		"title": "cinis",
 		"description": "Share secrets that self-destruct after one read."
 	},
-	"nav": {
-		"tagline": "one-time secrets"
-	},
 	"footer": {
-		"note": "Encrypted in your browser. The server never sees the key."
+		"note": "Encryption happens in your browser. The server never receives the key."
 	},
 	"create": {
 		"heading": "Share a one-time secret",
-		"description": "The secret is encrypted in your browser. The server stores only the ciphertext. The URL is destroyed after a single read.",
 		"label_secret": "Secret",
-		"placeholder": "Type or paste a secret…",
+		"required": "Required",
+		"secret_support": "Encrypted in your browser; the server stores only the ciphertext. The URL is destroyed after a single read.",
+		"counter": "{count} / {max} characters",
 		"label_expires": "Expires in",
+		"expires_support": "If nobody opens it in time, the server deletes it automatically.",
 		"expiry": {
 			"5m": "5 minutes",
 			"1h": "1 hour",
@@ -22,24 +21,29 @@
 			"7d": "7 days"
 		},
 		"submit": "Create one-time URL",
-		"submitting": "Encrypting…",
-		"result_note": "Share this URL. It works only once.",
+		"submitting": "Encrypting",
+		"result_title": "One-time URL created",
+		"result_note": "Send this URL to the recipient. It opens only once.",
+		"result_label": "Share URL",
 		"copy": "Copy",
 		"copied": "Copied!",
-		"reset": "Create another"
+		"reset": "Create another",
+		"close": "Close"
 	},
 	"reveal": {
-		"checking": "Checking…",
+		"checking": "Checking the secret.",
 		"no_key_title": "No key in URL",
-		"no_key_body": "This URL is missing the decryption key (the part after #). Without it the secret cannot be decrypted.",
+		"no_key_body": "This URL is missing the decryption key (the part after #). Paste the full URL you received, including the end.",
 		"gone_title": "This secret is gone",
-		"gone_body": "It has been read once, or it has expired.",
+		"gone_body": "It has been read once, or it has expired. Ask the sender for a new one if you still need it.",
 		"ready_title": "A secret is waiting for you",
-		"ready_body": "Once revealed, it will be permanently deleted from the server. You will not be able to re-open this link.",
+		"ready_body": "Once revealed, it is permanently deleted from the server. You will not be able to open this URL again.",
 		"reveal_button": "Reveal once",
-		"revealing": "Decrypting…",
-		"destroyed_note": "This secret has been destroyed on the server.",
-		"error_title": "Failed to decrypt"
+		"revealing": "Decrypting.",
+		"destroyed_title": "Secret revealed",
+		"destroyed_note": "It has been deleted from the server. Save it now if you need it.",
+		"error_title": "Failed to decrypt",
+		"error_body": "The key does not match this URL, or the request failed."
 	},
 	"errors": {
 		"create_failed": "create failed: {status}",
