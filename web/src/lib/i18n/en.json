@@ -3,6 +3,12 @@
 		"title": "cinis",
 		"description": "Share secrets that self-destruct after one read."
 	},
+	"theme": {
+		"label": "Theme",
+		"system": "System",
+		"light": "Light",
+		"dark": "Dark"
+	},
 	"footer": {
 		"note": "Encryption happens in your browser. The server never receives the key."
 	},
